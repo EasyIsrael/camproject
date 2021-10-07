@@ -2,12 +2,12 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'Cmproject'
+copyright = '2017-2021, Martin Israel'
+author = 'Martin Israel'
 
-release = '0.1'
-version = '0.1.0'
+release = '0.4'
+version = '0.4'
 
 # -- General configuration
 

@@ -1,13 +1,10 @@
-Welcome to Lumache's documentation!
+Welcome to Camproject's documentation!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**Camproject** is a Python library for camera projections and reprojections. 
+If you take a photo of a scene and you know the coordinates and orientation of the camera you can calculate the pixel position from a 3D scene object (projection) or - if you know the distance between camera and 3D scene object - you can invert this process and calculate the 3D coordinates from the pixel position (reprojection).
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Check out the :doc:`introduction` section for further information. :doc:`quickstart` gives you the most important commands to work with this library.
 
 .. note::
 
@@ -17,6 +14,18 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+    
+   introduction 
+   quickstart
+   extrinsics
+   api/modules
 
-   usage
-   api
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
