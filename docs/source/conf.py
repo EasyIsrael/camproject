@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = 'Cmproject'
+project = 'Camproject'
 copyright = '2017-2021, Martin Israel'
 author = 'Martin Israel'
 

@@ -56,6 +56,7 @@ class Extrinsics(object):
         '''
         if this data comes from a camera builtin IMU, it's probably "ZYX" order,
         Gimbals used to have "ZXY" order. Reference frame: FRD 
+        the unit of pitch, roll and yaw is degree [-360 .. 360]
         '''
         self.params["gimbal"]={"roll":roll,"pitch":pitch,"yaw":yaw,"order":order}
         if order == "ZXY":
@@ -69,6 +70,7 @@ class Extrinsics(object):
     def setCameraBoresight(self,droll=0,dpitch=0,dyaw=0,dx=0,dy=0,dz=0,order="ZYX"):
         '''
         These boresight angles are mount corrections between camera and gimbal. Reference frame: FRD
+        the unit of dpitch, droll and dyaw is degree [-360 .. 360]
         '''
         self.params["camera_boresight"]={"roll":droll,"pitch":dpitch,"yaw":dyaw,"dx":dx,"dy":dy,"dz":dz,"order":order}
         if order == "ZXY":

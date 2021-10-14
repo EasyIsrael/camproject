@@ -13,10 +13,10 @@ to use this library you need just a few lines of code.
 This projects the Point P(1,0,10) on to the camera image plane. We call the projected point p(u,v) ::
 
     import numpy as np
-    import camera
+    import camproject
     
     P = np.array([[1],[0],[10],[1]])   
-    cam = camera.Camera()
+    cam = camproject.Camera()
     cam.intrinsics(640,512,1000,320,260)
     cam.attitudeMat(np.eye(4))
     p = cam.project(P)
