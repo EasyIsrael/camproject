@@ -23,7 +23,7 @@ This projects the Point P(1,0,10) on to the camera image plane. We call the proj
 
 and to reproject it back to the 3D world we use this code ::    
 
-    Q = cam.reprojectToPlane(p,distance=10) 
+    Q = cam.reprojectToPlane(p) 
     
 if this easy reprojection does not fit your needs, you can use reproject(p) which returns a direction vector
 and write your own reprojection wrapper.   
