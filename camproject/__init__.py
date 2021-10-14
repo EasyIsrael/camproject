@@ -5,7 +5,7 @@ from numpy import sin as s, cos as c
 from .utils import *
 from .extrinsics import *
 
-__version__ = "0.37"
+__version__ = "0.4"
 
  
  
@@ -154,54 +154,48 @@ class Camera(object):
         elif self.distortionmodel == CamModel.LUT:
             pass
     
-    def reproject(self,x,distance=1):
+    def reproject(self,x):
         """
-        reprojects a pixel to a 3d-ray
+        reprojects a pixel to a real 3D point (in homogeneous coordinates) on the ray between camera position and projected scene point. 
         """
         xt = x.T    
         if self.distortionmodel == CamModel.NOCAM:
             Xi = self.Si.dot(xt)
             return Xi.T 
         elif self.distortionmodel == CamModel.PINHOLE:
-            #print("xt",xt)
             X3d = np.array([xt[0],xt[1],np.ones_like(xt[0]),np.ones_like(xt[0])])
-            #print("X3d",X3d)
             Xi = self.Si.dot(self.__Kinv__()).dot(self.Pi).dot(X3d)
-            #print("Xi",Xi)
-            return (Xi/Xi[3]).T
-            
+            X = (Xi/Xi[3]).T
+            return X
         elif self.distortionmodel == CamModel.BROWN:
             pass
         elif self.distortionmodel == CamModel.LUT:
             pass
     
-    def reprojectToPlane(self,x,distance):
+    def reprojectToPlane(self,x,plane=np.array([0,0,1,0])):
         """
           this is a wrapper for reproject() to get real world coordinates instead of a direction vector.
           the direction vector of reproject() intersects a virtual plane with the given distance.
           the plane lies in front of the camera and parallel to its focal plane array.
           the intersection point will be returned. 
                    
-           :param x: a numpy 2D-Point (x,y) coordinates of an image 
-           :param distance: the distance of the parallel virual intersection plane
-           :type x: 2D numpy array [[x],[y]] (in pixel coordinates)
-           :type distance: float (in world coordinates e.g. in meter)
-           :return: the reprojected Point in 3D world coordinates. returns [[None],[None],[None]] 
-                   if no intersection or plane is not in front of the camera.
+           :param x: (x,y) coordinates of an image 
+           :param plane: [x1,x2,x3,x4]. x1 to x3 is the normal vector of the plane and x4 is - distance from the origin (default is a flat plane that lies in x,y with z = 0. [0,0,1,0]). 
+           :type x: 2D numpy array [x,y] or multiple 2D arrays [[x1,y1],[x2,y2]] (in pixel coordinates)
+           :type plane: 4D homogenious numpy array [nx,ny,nz,-d]. 
+           :return: the reprojected Point in 3D world coordinates. returns [[None],[None],[None]] if no intersection or plane is not in front of the camera.
            :rtype: 3D numpy Array [[X][Y][Z]] (in world coordinates)
         """
         if self.distortionmodel == CamModel.NOCAM:
             raise("Error- with NOCAM this method doeas not work!")
         rp = self.reproject(x)
-        raydir = np.add(rp.T[0:3].T, - self.position().ravel()[0:3]).T
-        n_plane = np.array([0,0,1])
-        plane = n_plane * (- distance)
-        rd_n = np.dot(raydir.T, n_plane)
-        pd = np.dot(plane, n_plane)
-        p0_n = np.dot(self.position().ravel()[0:3], n_plane)
-        t = (pd - p0_n) / np.ma.masked_where(rd_n >= 0, rd_n)
-        return np.add(self.position().ravel()[0:3], (raydir * t).T)
-        
+        if rp.ndim==1:
+            rp = rp.reshape(1,rp.shape[0]).T
+        if plane.ndim==1:
+            plane = plane.reshape(1,plane.shape[0]).T
+        L = rp.dot(self.position().T) - self.position().dot(rp.T)
+        P = L.dot(plane)
+        return(P/P[3])
            
 #
 # BROWN
