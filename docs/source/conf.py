@@ -2,12 +2,12 @@
 
 # -- Project information
 
-project = 'Cmproject'
+project = 'Camproject'
 copyright = '2017-2021, Martin Israel'
 author = 'Martin Israel'
 
-release = '0.4'
-version = '0.4'
+release = '0.42'
+version = '0.42'
 
 # -- General configuration
 

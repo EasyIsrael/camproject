@@ -21,7 +21,7 @@ Contents
    quickstart
    extrinsics
    api/modules
-
+   
 
 Indices and tables
 ==================

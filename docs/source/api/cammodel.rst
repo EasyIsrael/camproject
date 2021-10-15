@@ -1,7 +1,7 @@
 CamModel
 ========
 
-.. autoclass:: camera.CamModel
+.. autoclass:: camproject.CamModel
     :members:
 
     

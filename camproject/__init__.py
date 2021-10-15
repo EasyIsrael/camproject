@@ -5,7 +5,7 @@ from numpy import sin as s, cos as c
 from .utils import *
 from .extrinsics import *
 
-__version__ = "0.40"
+__version__ = "0.42"
 
  
  
@@ -186,16 +186,31 @@ class Camera(object):
            :return: the reprojected Point in 3D world coordinates. returns [[None],[None],[None]] if no intersection or plane is not in front of the camera.
            :rtype: 3D numpy Array [[X][Y][Z]] (in world coordinates)
         """
+        if isinstance(plane, int) or isinstance(plane,float):
+            plane = np.array([0,0,1,plane])
         if self.distortionmodel == CamModel.NOCAM:
             raise("Error- with NOCAM this method doeas not work!")
+        
         rp = self.reproject(x)
-        if rp.ndim==1:
-            rp = rp.reshape(1,rp.shape[0]).T
+        dim = rp.ndim
         if plane.ndim==1:
             plane = plane.reshape(1,plane.shape[0]).T
-        L = rp.dot(self.position().T) - self.position().dot(rp.T)
-        P = L.dot(plane)
-        return(P/P[3])
+        rep = rp.shape[0] if rp.ndim==2 else 1
+        c = np.repeat(self.position().T,rep,axis=0)
+        pl = np.repeat(plane.reshape(4,1), rep,axis=1).T.ravel()
+        L = np.outer(rp,c) - np.outer(c,rp)
+        P = L.dot(pl)
+        out = (P/P[3]).T
+        return out.reshape(rp.shape)
+        
+        #rp = self.reproject(x)
+        #if rp.ndim==1:
+        #    rp = rp.reshape(1,rp.shape[0]).T
+        #if plane.ndim==1:
+        #    plane = plane.reshape(1,plane.shape[0]).T
+        #L = rp.dot(self.position().T) - self.position().dot(rp.T)
+        #P = L.dot(plane)
+        #return(P/P[3])
            
 #
 # BROWN

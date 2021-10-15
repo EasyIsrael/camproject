@@ -35,7 +35,7 @@ Quickstart-Usage
 
 to reproject it back to the 3D world we use this code
 
-    Q = cam.reprojectToPlane(p,distance=10) 
+    Q = cam.reprojectToPlane(p) 
 
    
    

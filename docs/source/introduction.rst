@@ -2,10 +2,10 @@ Introduction
 ============
 
 
-What is the python camera module?
+What is the python camproject module?
 ---------------------------------
 
-camera is a python module that provides functionality for projection
+camproject is a python module that provides functionality for projection
 from a 3D-scene to the 2D image plane of a camera. It also provides functionality 
 for the reprojection from the 2d image plane to the scene in the 3D world coordinates.
 It is commonly required in engineering and science applications for georeferencing images. 

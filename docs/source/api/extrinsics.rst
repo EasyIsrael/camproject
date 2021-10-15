@@ -1,9 +1,9 @@
-Camera
+Extrinsics
 ==============
 
 
-.. autoclass:: camproject.Camera
+.. autoclass:: camproject.Extrinsics
     :members:
     :undoc-members:
     :show-inheritance:
-    :noindex: camproject.CamModel
+   
