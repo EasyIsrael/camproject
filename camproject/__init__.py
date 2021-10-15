@@ -5,7 +5,7 @@ from numpy import sin as s, cos as c
 from .utils import *
 from .extrinsics import *
 
-__version__ = "0.4"
+__version__ = "0.40"
 
  
  
